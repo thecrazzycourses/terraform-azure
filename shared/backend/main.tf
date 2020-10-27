@@ -8,16 +8,9 @@ variable "location" {
   default = "centralus"
 }
 
-variable "environment" {
-  default = "default"
-}
-
 resource "azurerm_resource_group" "rg_backend" {
   location = var.location
-  name = "rg-backend-${var.environment}"
-  tags = {
-    application: "ecom"
-  }
+  name = "rg-backend"
 }
 
 resource "azurerm_storage_account" "st_backend" {
@@ -26,8 +19,9 @@ resource "azurerm_storage_account" "st_backend" {
   account_tier = "Standard"
   account_replication_type = "LRS"
   resource_group_name = azurerm_resource_group.rg_backend.name
-  tags = {
-    application: "ecom"
-  }
 }
 
+resource "azurerm_storage_container" "st_container" {
+  name = "tfstate"
+  storage_account_name = azurerm_storage_account.st_backend.name
+}

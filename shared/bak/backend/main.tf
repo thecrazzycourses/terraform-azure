@@ -1,5 +1,5 @@
 module "backend_module" {
-  source = "../../modules/backend"
+  source = "..\/..\/modules\/backend"
   environment = "shared"
   location = "centralus"
 }
